@@ -82,7 +82,7 @@ from EMPLOYEES;
 
 --6
 select MAX(Salary) AS Max_Salary, MIN(Salary) AS Min_Salary, SUM(Salary) AS Sum_Of_Salary, AVG(Salary) AS Avg_Salary 
-from EMPLOYEES inner join JOBS on JOBS.Job_ID = Employee_ID;
+from EMPLOYEES inner join JOBS on JOBS.Job_ID = EMPLOYEES.Job_ID group by EMPLOYEES.Job_ID;
 
 --7
 select CONCAT(A.First_Name, ' ', A.Last_Name) AS Name, A.Hire_Date AS Hire_Date, CONCAT(B.First_Name, ' ', B.Last_Name) AS Manager, B.Hire_Date AS Manager_Hire_Date
@@ -119,13 +119,13 @@ UPDATE JOBS
 SET Job_title = 'ST_Clerk' where Job_ID = 8;
 
 select Department_ID from EMPLOYEES
-where Department_ID != 8
-UNION 
+EXCEPT
 select Department_ID from EMPLOYEES
-where Department_ID != 8;
+where Department_ID = 8;
 
 --13
 --select Employee_ID, Job_ID, Department_ID from EMPLOYEES where Department_ID IN (1, 3, 4) ORDER BY Department_ID;
-
-select Employee_ID, Job_ID, Department_ID from EMPLOYEES
-where Department_ID IN (50, 80) ORDER BY Department_ID;
+select Employee_ID, Job_ID, Department_ID from EMPLOYEES 
+where Department_ID = 1 
+UNION
+select Employee_ID, Job_ID, Department_ID from EMPLOYEES where Department_ID = 3;
